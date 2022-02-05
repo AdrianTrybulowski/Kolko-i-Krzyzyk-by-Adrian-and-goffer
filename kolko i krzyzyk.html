@@ -1,194 +1,199 @@
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>kolko i krzyzyk by Goffer31 and Adrian</title>
 </head>
-<body>  
+
+<body>
   <p id="gracz">Aktualny gracz: </p>
-<canvas id="myCanvas" width="300" height="300" style="border:1px solid #000000;">
-</canvas>
+  <canvas id="myCanvas" width="300" height="300" style="border:1px solid #000000;">
+  </canvas>
   <script>
-    
+
     var aktualnyGracz = 1
     var czyKoniec = 0
-var kratki = [0,0,0,0,0,0,0,0,0]
-var wyswietlGracza = function(){
-  if(czyKoniec == 0){
-  if (aktualnyGracz == 1) {
-document.getElementById("gracz").innerHTML="Aktualny gracz: kolko"
-}
+    var kratki = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var wyswietlGracza = function () {
+      if (czyKoniec == 0) {
+        if (aktualnyGracz == 1) {
+          document.getElementById("gracz").innerHTML = "Aktualny gracz: kolko"
+        }
 
 
-if (aktualnyGracz == 2) {
-document.getElementById("gracz").innerHTML="Aktualny gracz: krzyzyk"
-}
-}}
-
-var wygrana = function(gracz,indeks){
-  czyKoniec = 1
-  if (gracz == 1) {
-document.getElementById("gracz").innerHTML="Koniec gry, wygrał gracz: kolko"
-}if (gracz == 2)  {
-  document.getElementById("gracz").innerHTML="Koniec gry, wygrał gracz: krzyzyk"
-} 
-  narysujLinieNaKoniecGry(indeks)
-}
-var sprawdzWarunki = function(x,y,z,idik,indeks){
-      if(kratki[x]==idik && kratki[y] == idik && kratki[z] == idik){
-      wygrana(idik,indeks)
-    }
-}
-var przelaczGracza = function(){
-  if(czyKoniec == 0){
-  if (aktualnyGracz == 1) {
-aktualnyGracz = 2
-}
-else if (aktualnyGracz == 2) {
-  aktualnyGracz = 1
-}
-  wyswietlGracza()}}
-var narysujLinieNaKoniecGry = function(id){
-  var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-  if(id == 1){
-    ctx.moveTo(0,50);
-    ctx.lineTo(300,50);
-    ctx.stroke();
-  }
-    if(id == 2){
-    ctx.moveTo(0,150);
-    ctx.lineTo(300,150);
-    ctx.stroke();
-  }
-    if(id == 3){
-    ctx.moveTo(0,250);
-    ctx.lineTo(300,250);
-    ctx.stroke();
-  }
-    if(id == 4){
-    ctx.moveTo(50,0);
-    ctx.lineTo(50,300);
-    ctx.stroke();
-  }
-    if(id == 5){
-    ctx.moveTo(150,0);
-    ctx.lineTo(150,300);
-    ctx.stroke();
-  }
-    if(id == 6){
-    ctx.moveTo(250,0);
-    ctx.lineTo(250,300);
-    ctx.stroke();
-  }
-    if(id == 7){
-    ctx.moveTo(0,0);
-    ctx.lineTo(300,300);
-    ctx.stroke();
-  }
-    if(id == 8){
-    ctx.moveTo(0,300);
-    ctx.lineTo(300,0);
-    ctx.stroke();
-  }
-}
-    var narysujKratki = function(){
-  var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-ctx.moveTo(100, 0);
-ctx.lineTo(100, 300);
-ctx.stroke();
-
-  
-ctx.moveTo(200, 0);
-ctx.lineTo(200, 300);
-ctx.stroke();
-
-    ctx.moveTo(0, 100);
-ctx.lineTo(300, 100);
-ctx.stroke();
-
-    ctx.moveTo(0, 200);
-ctx.lineTo(300, 200);
-ctx.stroke();
-}
-    
-var narysujKrzyzyk = function(x,y){
-  
- var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-    
-    ctx.moveTo(0+100*y,0+100*x);
-ctx.lineTo(100+100*y, 100+100*x);
-ctx.stroke();
-
-    ctx.moveTo(100+100*y,0+100*x);
-ctx.lineTo(0+100*y,100+100*x);
-ctx.stroke();
-}    
-var narysujKolko = function(x,y){
-  var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-ctx.beginPath();
-ctx.arc(100*x+50, 100*y+50, 50, 0, 2 * Math.PI);
-ctx.stroke();
-}
-function getCursorPosition(canvas, event) {
-    const rect = canvas.getBoundingClientRect()
-    const x = event.clientX - rect.left
-    const y = event.clientY - rect.top
-    
-    var xx, yy;
-    if(x < 100)
-      xx = 0
-    if (x < 200 && x>= 100)
-       xx = 1
-     if (x < 300 && x>= 200)
-       xx = 2
-     if (y < 100)
-       yy = 0
-     if(y < 200 && y>= 100)
-       yy = 1
-       if (y < 300 && y>= 200)
-       yy = 2
-         var ajdik = yy*3+xx;
-
-  if(czyKoniec==0){
-     if(kratki[ajdik] == 0)
-{
-     if(aktualnyGracz == 1){
-     	narysujKolko(xx,yy)
-     }
-      else if(aktualnyGracz == 2){
-        narysujKrzyzyk(yy,xx)
+        if (aktualnyGracz == 2) {
+          document.getElementById("gracz").innerHTML = "Aktualny gracz: krzyzyk"
+        }
       }
-      kratki[ajdik]=aktualnyGracz
-    console.log(kratki);
-  for(var idik = 1; idik <= 2; idik++){
-    sprawdzWarunki(0,1,2,idik,1);
-    sprawdzWarunki(3,4,5,idik,2);
-    sprawdzWarunki(6,7,8,idik,3);
-    sprawdzWarunki(0,3,6,idik,4);
-    sprawdzWarunki(1,4,7,idik,5);
-    sprawdzWarunki(2,5,8,idik,6);
-    sprawdzWarunki(0,4,8,idik,7);
-    sprawdzWarunki(2,4,6,idik,8);
-  }
-    przelaczGracza()
-  }
-}
+    }
 
-}
+    var wygrana = function (gracz, indeks) {
+      czyKoniec = 1
+      if (gracz == 1) {
+        document.getElementById("gracz").innerHTML = "Koniec gry, wygrał gracz: kolko"
+      } if (gracz == 2) {
+        document.getElementById("gracz").innerHTML = "Koniec gry, wygrał gracz: krzyzyk"
+      }
+      narysujLinieNaKoniecGry(indeks)
+    }
+    var sprawdzWarunki = function (x, y, z, idik, indeks) {
+      if (kratki[x] == idik && kratki[y] == idik && kratki[z] == idik) {
+        wygrana(idik, indeks)
+      }
+    }
+    var przelaczGracza = function () {
+      if (czyKoniec == 0) {
+        if (aktualnyGracz == 1) {
+          aktualnyGracz = 2
+        }
+        else if (aktualnyGracz == 2) {
+          aktualnyGracz = 1
+        }
+        wyswietlGracza()
+      }
+    }
+    var narysujLinieNaKoniecGry = function (id) {
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      if (id == 1) {
+        ctx.moveTo(0, 50);
+        ctx.lineTo(300, 50);
+        ctx.stroke();
+      }
+      if (id == 2) {
+        ctx.moveTo(0, 150);
+        ctx.lineTo(300, 150);
+        ctx.stroke();
+      }
+      if (id == 3) {
+        ctx.moveTo(0, 250);
+        ctx.lineTo(300, 250);
+        ctx.stroke();
+      }
+      if (id == 4) {
+        ctx.moveTo(50, 0);
+        ctx.lineTo(50, 300);
+        ctx.stroke();
+      }
+      if (id == 5) {
+        ctx.moveTo(150, 0);
+        ctx.lineTo(150, 300);
+        ctx.stroke();
+      }
+      if (id == 6) {
+        ctx.moveTo(250, 0);
+        ctx.lineTo(250, 300);
+        ctx.stroke();
+      }
+      if (id == 7) {
+        ctx.moveTo(0, 0);
+        ctx.lineTo(300, 300);
+        ctx.stroke();
+      }
+      if (id == 8) {
+        ctx.moveTo(0, 300);
+        ctx.lineTo(300, 0);
+        ctx.stroke();
+      }
+    }
+    var narysujKratki = function () {
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      ctx.moveTo(100, 0);
+      ctx.lineTo(100, 300);
+      ctx.stroke();
+
+
+      ctx.moveTo(200, 0);
+      ctx.lineTo(200, 300);
+      ctx.stroke();
+
+      ctx.moveTo(0, 100);
+      ctx.lineTo(300, 100);
+      ctx.stroke();
+
+      ctx.moveTo(0, 200);
+      ctx.lineTo(300, 200);
+      ctx.stroke();
+    }
+
+    var narysujKrzyzyk = function (x, y) {
+
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+
+      ctx.moveTo(0 + 100 * y, 0 + 100 * x);
+      ctx.lineTo(100 + 100 * y, 100 + 100 * x);
+      ctx.stroke();
+
+      ctx.moveTo(100 + 100 * y, 0 + 100 * x);
+      ctx.lineTo(0 + 100 * y, 100 + 100 * x);
+      ctx.stroke();
+    }
+    var narysujKolko = function (x, y) {
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      ctx.beginPath();
+      ctx.arc(100 * x + 50, 100 * y + 50, 50, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+    function getCursorPosition(canvas, event) {
+      const rect = canvas.getBoundingClientRect()
+      const x = event.clientX - rect.left
+      const y = event.clientY - rect.top
+
+      var xx, yy;
+      if (x < 100)
+        xx = 0
+      if (x < 200 && x >= 100)
+        xx = 1
+      if (x < 300 && x >= 200)
+        xx = 2
+      if (y < 100)
+        yy = 0
+      if (y < 200 && y >= 100)
+        yy = 1
+      if (y < 300 && y >= 200)
+        yy = 2
+      var ajdik = yy * 3 + xx;
+
+      if (czyKoniec == 0) {
+        if (kratki[ajdik] == 0) {
+          if (aktualnyGracz == 1) {
+            narysujKolko(xx, yy)
+          }
+          else if (aktualnyGracz == 2) {
+            narysujKrzyzyk(yy, xx)
+          }
+          kratki[ajdik] = aktualnyGracz
+          console.log(kratki);
+          for (var idik = 1; idik <= 2; idik++) {
+            sprawdzWarunki(0, 1, 2, idik, 1);
+            sprawdzWarunki(3, 4, 5, idik, 2);
+            sprawdzWarunki(6, 7, 8, idik, 3);
+            sprawdzWarunki(0, 3, 6, idik, 4);
+            sprawdzWarunki(1, 4, 7, idik, 5);
+            sprawdzWarunki(2, 5, 8, idik, 6);
+            sprawdzWarunki(0, 4, 8, idik, 7);
+            sprawdzWarunki(2, 4, 6, idik, 8);
+          }
+          przelaczGracza()
+        }
+      }
+
+    }
     const canvas = document.querySelector('canvas')
-canvas.addEventListener('mousedown', function(e) {
-    getCursorPosition(canvas, e)
-})
-narysujKratki();
+    canvas.addEventListener('mousedown', function (e) {
+      getCursorPosition(canvas, e)
+    })
+    narysujKratki();
 
-    
-wyswietlGracza();
-    
+
+    wyswietlGracza();
+
   </script>
 
 </body>
+
 </html>
