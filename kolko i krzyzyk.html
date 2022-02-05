@@ -154,8 +154,10 @@ function getCursorPosition(canvas, event) {
          var ajdik = yy*3+xx;
 
   if(czyKoniec==0){
+     if(kratki[ajdik] == 0)
+{
      if(aktualnyGracz == 1){
-     narysujKolko(xx,yy)
+     	narysujKolko(xx,yy)
      }
       else if(aktualnyGracz == 2){
         narysujKrzyzyk(yy,xx)
@@ -174,7 +176,7 @@ function getCursorPosition(canvas, event) {
   }
     przelaczGracza()
   }
-
+}
 
 }
     const canvas = document.querySelector('canvas')
